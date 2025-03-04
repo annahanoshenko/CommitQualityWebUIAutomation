@@ -19,9 +19,12 @@ namespace CommitQualityWebUIAutomation.Pages
 
         public void LoginUser(UserEntity user)
         {
+            ClickLoginBtn();
             EnterUsername(user.Username);
             EnerPassword(user.Password);
             ClickLoginPopUpBtn();
         }
+
+       public string GetLoginErrorMessage() => Driver.FindElement(By.XPath("//div[@class='error']")).Text; 
     }
 }

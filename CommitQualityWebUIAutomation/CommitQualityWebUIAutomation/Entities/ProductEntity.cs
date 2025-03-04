@@ -1,16 +1,16 @@
 ﻿namespace CommitQualityWebUIAutomation.Entities
 {
-    internal class ProductEntity
+    public class ProductEntity
     {
-        public string Username { get; set; }    
-        public int Price { get; set; }
-        public double DataStocked { get; set; }
+        public string ProductName { get; set; }    
+        public string ProductPrice { get; set; }
+        public string DateStocked { get; set; }
 
-        public ProductEntity(string username, int price, double dataStocked) 
+        public ProductEntity(string username, string price, string dataStocked) 
         {
-            Username = username;
-            Price = price;
-            DataStocked = dataStocked;
+            ProductName = username;
+            ProductPrice = price;
+            DateStocked = dataStocked;
         }
     }
 }

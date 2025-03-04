@@ -1,10 +1,6 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SeleniumExtras.WaitHelpers;
 
 namespace CommitQualityWebUIAutomation.Base
 {
@@ -20,6 +16,7 @@ namespace CommitQualityWebUIAutomation.Base
         public IAlert GetAlertWithWait()
         {
             IAlert alert = wait.Until(ExpectedConditions.AlertIsPresent());
+            return alert;
         }
         public string GetAlertTextWithWait()
         {
@@ -31,6 +28,11 @@ namespace CommitQualityWebUIAutomation.Base
         {
             IAlert alert = GetAlertWithWait();
             alert.Accept();
+        }
+
+        public bool ContainsClass(IWebElement webElement, string className)
+        {
+            return webElement.GetAttribute("class").Contains(className);
         }
     }
 }

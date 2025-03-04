@@ -18,5 +18,8 @@ namespace CommitQualityWebUIAutomation.Pages
         public void ClickLogoutBtn() => LogoutBtn.Click();
         public void ClickProductsBtn() => ProductsBtn.Click();
         public void ClickAddProductsBtn() => AddProductsBtn.Click();
+
+        public bool IsLoginBtnVisible() => LoginBtn.Displayed;
+        public bool IsLogoutBtnVisible() => LogoutBtn.Displayed;
     }
 }

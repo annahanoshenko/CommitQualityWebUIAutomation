@@ -5,10 +5,11 @@ namespace CommitQualityWebUIAutomation.Pages
 {
     public class ProductsPage : MenuBar
     {
-        IWebElement FilterBtn => Driver.FindElement(By.XPath("//button[@data-testid='filter-button']"));
-        IWebElement ResetBtn => Driver.FindElement(By.XPath("//button[@data-testid='reset-filter-button']"));
-        IWebElement FilterByProductNameTextField => Driver.FindElement(By.XPath("//input[@class='filter-textbox']"));
-        IWebElement[] TableProductRows => Driver.FindElements(By.XPath("//tr[contains(@data-testid,'product-row')]")).ToArray();
+       private IWebElement FilterBtn => Driver.FindElement(By.XPath("//button[@data-testid='filter-button']"));
+        private IWebElement ResetBtn => Driver.FindElement(By.XPath("//button[@data-testid='reset-filter-button']"));
+        private IWebElement FilterByProductNameTextField => Driver.FindElement(By.XPath("//input[@class='filter-textbox']"));
+        private IWebElement[] TableProductRows => Driver.FindElements(By.XPath("//tr[contains(@data-testid,'product-row')]")).ToArray();
+
 
         //public ProductRow[] GetProductRows()
         //{
@@ -30,10 +31,35 @@ namespace CommitQualityWebUIAutomation.Pages
             return productRow;
         }
 
-
         public void ClickFilterBtn() => FilterBtn.Click();
         public void ClickResetBtn() => ResetBtn.Click();
         public void EnterProductName(string productName) => FilterByProductNameTextField.SendKeys(productName);
-       
+
+       public string GetFilteringErrorMessage() => Driver.FindElement(By.XPath("//p[@class='add-product-message']")).Text;
+
+        public bool IsProductisVisible(string productName)
+        {
+            try
+            {
+                return Driver.FindElement(By.XPath($"//td[@data-testid='name' and text()='{productName}']")).Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
+        public bool AreFilteredProductsOnly(string productName)
+        {
+            foreach (var row in ProductRows)
+            {
+                string productNameInRow = row.GetProductName();
+                if (!productNameInRow.Contains(productName))
+                {
+                    return false;
+                }
+            }
+                return true;
+            }
     }
 }
