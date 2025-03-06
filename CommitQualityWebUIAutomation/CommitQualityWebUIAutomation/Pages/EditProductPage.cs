@@ -1,16 +1,15 @@
-﻿using CommitQualityWebUIAutomation.Entities;
-using CommitQualityWebUIAutomation.WebElements;
+﻿using CommitQualityWebUIAutomation.Base;
+using CommitQualityWebUIAutomation.Entities;
 using OpenQA.Selenium;
 
 namespace CommitQualityWebUIAutomation.Pages
 {
-    public class EditProductPage : ProductRow
+    public class EditProductPage : PageBase
     {
-        public EditProductPage(IWebDriver driver, IWebElement productRow) : base(productRow)
+        public EditProductPage(IWebDriver driver) : base(driver)
         {
-            this.Driver = driver;
         }
-
+       
         private IWebElement ProductNameTitleField => Driver.FindElement(By.XPath("//input[@data-testid='product-textbox']"));
         private IWebElement PriceField => Driver.FindElement(By.XPath("//input[@data-testid='price-textbox']"));
         private IWebElement DataStockedField => Driver.FindElement(By.XPath("//input[@data-testid='date-stocked']"));
@@ -28,12 +27,53 @@ namespace CommitQualityWebUIAutomation.Pages
 
         public void FillingProductFields(ProductEntity product)
         {
-            ClickEditProductBtn();
+            ProductNameTitleField.Clear();
             EditProductName(product.ProductName);
+            PriceField.Clear();
             EditPriceField(product.ProductPrice);
+            DataStockedField.Clear();
             EditDataStockedField(product.DateStocked);
             ClickUpdateBtn();
         }
+        public void FillingProductFieldsWithEmpty()
+        {
+            ProductNameTitleField.Clear();
+            PriceField.Clear();
+            DataStockedField.Clear();
+            ClickUpdateBtn();
+        }
+        public void ClearWithBackSpace()
+        {
+            int numberOfCharactersToDelete = ProductNameTitleField.GetAttribute("value").Length;
+            for (int i = 0; i < numberOfCharactersToDelete; i++)
+            {
+                ProductNameTitleField.SendKeys(Keys.Backspace);
+            }
+
+            numberOfCharactersToDelete = PriceField.GetAttribute("value").Length;
+            for (int i = 0; i < numberOfCharactersToDelete; i++)
+            {
+                PriceField.SendKeys(Keys.Backspace);
+            }
+
+            ClickUpdateBtn();
+
+            IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
+            js.ExecuteScript("arguments[0].value = '';", DataStockedField);
+
+            ClickUpdateBtn();
+
+            //numberOfCharactersToDelete = DataStockedField.GetAttribute("value").Length;
+            //for (int i = 0; i < numberOfCharactersToDelete; i++)
+            //{
+            //    DataStockedField.SendKeys(Keys.Backspace);
+            //}
+
+        }
+
+        public string GetEditProductName() => ProductNameTitleField.Text;
+        public string GetEditProductPrice() => PriceField.Text;
+        public string GetEditProductDateStocked() => DataStockedField.Text;
 
         public string GetEditProductNameErrorMessage() => ProductNameErrorMessage.Text;
         public string GetEditProductPriceErrorMessage() => ProductPriceErrorMessage.Text;

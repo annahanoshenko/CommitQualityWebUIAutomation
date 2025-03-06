@@ -1,6 +1,6 @@
 ﻿using CommitQualityWebUIAutomation.WebElements;
-using Docker.DotNet.Models;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace CommitQualityWebUIAutomation.Pages
 {
@@ -30,7 +30,6 @@ namespace CommitQualityWebUIAutomation.Pages
         {
             var test = ProductRows.Select(p => p.ProductName.Text).ToArray(); 
             ProductRow productRow = ProductRows.Single(p => p.ProductName.Text == productName);
-            //ProductRow productRow = ProductRows.Where(p => p.ProductName.Text == productName).FirstOrDefault();
             return productRow;
         }
 
@@ -44,9 +43,15 @@ namespace CommitQualityWebUIAutomation.Pages
         {
             try
             {
-                return Driver.FindElement(By.XPath($"//td[@data-testid='name' and text()='{productName}']")).Displayed;
+                WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+                return wait.Until(d =>
+                    d.FindElement(By.XPath($"//td[@data-testid='name' and text()='{productName}']")).Displayed);
             }
             catch (NoSuchElementException)
+            {
+                return false;
+            }
+            catch (WebDriverTimeoutException)
             {
                 return false;
             }
@@ -77,11 +82,15 @@ namespace CommitQualityWebUIAutomation.Pages
             return productRows.Count > 0;
         }
 
+        public void EditProduct(string productName)
+        {
+            ProductRow productRow = GetProductRow(productName);
+            productRow.ClickEditProductBtn();
+        }
         public void DeleteProduct(string productName)
         {
             ProductRow productRow = GetProductRow(productName);
             productRow.ClickDeleteProductBtn();
         }
-
     }
 }

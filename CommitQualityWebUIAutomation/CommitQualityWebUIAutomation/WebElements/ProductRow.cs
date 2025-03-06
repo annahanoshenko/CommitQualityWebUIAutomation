@@ -29,7 +29,7 @@ namespace CommitQualityWebUIAutomation.WebElements
             Driver = driver;
         }
 
-        public ProductRow GetProductRow(string productName)
+        private ProductRow GetProductRow(string productName)
         {
             var productRowElement = Driver.FindElements(By.XPath($"//td[contains(text(), '{productName}')]")).FirstOrDefault();
             if (productRowElement == null)
