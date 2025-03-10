@@ -33,7 +33,6 @@ namespace CommitQualityWebUIAutomation.Pages
             EnterDateStocked(product.DateStocked);
             ClickSubmitBtn();
         }
-
         public string GetProductNameErrorMessage() => ProductNameErrorMessage.Text;
         public string GetProductPriceErrorMessage() => ProductPriceErrorMessage.Text;
         public string GetDateStockedErrorMessage() => DateStockedErrorMessage.Text;
