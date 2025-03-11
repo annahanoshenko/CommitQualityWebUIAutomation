@@ -7,6 +7,11 @@ namespace CommitQualityWebUIAutomation.Base
     {
         public IWebDriver Driver;
 
+        public TestBase(IWebDriver driver)
+        {
+            Driver = driver;
+        }
+
         [SetUp]
         public void Setup()
         {
