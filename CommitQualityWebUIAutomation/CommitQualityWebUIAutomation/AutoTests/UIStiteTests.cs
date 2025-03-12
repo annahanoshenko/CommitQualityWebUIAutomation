@@ -10,10 +10,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
     [TestFixture]
     public class Tests : TestBase
     {
-        public Tests(IWebDriver driver) : base(driver)
-        {
-        }
-
         [Test]
         public void ShouldLoginExistingUser_WhenDataIsValid()
         {

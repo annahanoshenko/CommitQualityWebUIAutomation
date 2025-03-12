@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 
 namespace CommitQualityWebUIAutomation.Pages
 {
-    public class PracticePage : TestBase
+    public class PracticePage : MenuBar
     {
         IWebElement GeneralComponentsContainer => Driver.FindElement(By.XPath("//div[@data-testid='practice-general']"));
         IWebElement AccordionsContainer => Driver.FindElement(By.XPath("//div[@data-testid='practice-accordions']"));

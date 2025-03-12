@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CommitQualityWebUIAutomation.Base;
+using CommitQualityWebUIAutomation.PracticePageContainers;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace CommitQualityWebUIAutomation.AutoTests
 {
-    internal class AccordionWithPopupTests
+    [TestFixture]
+    public class AccordionWithPopupTests : TestBase
     {
     }
 }

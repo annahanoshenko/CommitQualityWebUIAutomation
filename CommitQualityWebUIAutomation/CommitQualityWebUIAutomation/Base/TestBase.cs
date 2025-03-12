@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using CommitQualityWebUIAutomation.PracticePageContainers;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace CommitQualityWebUIAutomation.Base
@@ -6,11 +7,7 @@ namespace CommitQualityWebUIAutomation.Base
     public class TestBase
     {
         public IWebDriver Driver;
-
-        public TestBase(IWebDriver driver)
-        {
-            Driver = driver;
-        }
+      
 
         [SetUp]
         public void Setup()

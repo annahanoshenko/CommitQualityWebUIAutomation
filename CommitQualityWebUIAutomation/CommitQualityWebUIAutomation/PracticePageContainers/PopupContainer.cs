@@ -3,8 +3,12 @@ using OpenQA.Selenium;
 
 namespace CommitQualityWebUIAutomation.PracticePageContainers
 {
-    public class PopupContainer : TestBase
+    public class PopupContainer : PageBase
     {
+        public PopupContainer(IWebDriver driver) : base(driver)
+        {
+        }
+
         IWebElement Accordion1 => Driver.FindElement(By.XPath("//button[@data-testid='accordion-1']"));
         IWebElement Accordion2 => Driver.FindElement(By.XPath("//button[@data-testid='accordion-1']"));
         IWebElement Accordion3 => Driver.FindElement(By.XPath("//button[@data-testid='accordion-1']"));
@@ -15,9 +19,6 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         IWebElement RadioButton2 => Driver.FindElement(By.XPath("//input[@data-testid='option2']"));
         IWebElement CheckBox => Driver.FindElement(By.XPath("//div[@data-testid='practice-file-upload']"));
         IWebElement RandomPopupCloseBtn => Driver.FindElement(By.XPath("//div[@class='overplay-content']/button"));
-        public PopupContainer(IWebDriver driver) : base(driver)
-        {
-        }
        
         public void CloseRandomPopup() => RandomPopupCloseBtn.Click();
         public void ClickMeButtonClick() => ClickMeButton.Click();

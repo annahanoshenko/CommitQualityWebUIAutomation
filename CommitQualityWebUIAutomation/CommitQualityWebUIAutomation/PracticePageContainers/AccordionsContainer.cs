@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CommitQualityWebUIAutomation.PracticePageContainers
 {
-    public class AccordionsContainer : TestBase
+    public class AccordionsContainer : PageBase
     {
         IWebElement Accordion1 => Driver.FindElement(By.XPath("//button[@data-testid='accordion-1']"));
         IWebElement Accordion2 => Driver.FindElement(By.XPath("//button[@data-testid='accordion-1']"));
@@ -23,11 +23,13 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public AccordionsContainer(IWebDriver driver) : base(driver)
         {
         }
-
+        public void ClickAccordion1() => Accordion1.Click();
         public void ClickMeButtonClick() => ClickMeButton.Click();
         public void DoubleClickMeButtonClick() => DoubleClickMeButton.Click();
         public void RightClickMeButtonClick() => RightClickMeButton.Click();
+        public void ClickAccordion2() => Accordion2.Click();
         public void RadioButtonClick() => RadioButton.Click();
+        public void ClickAccordion3() => Accordion3.Click();
         public void ClickCheckBox() => CheckBox.Click();
 
         public void Check()

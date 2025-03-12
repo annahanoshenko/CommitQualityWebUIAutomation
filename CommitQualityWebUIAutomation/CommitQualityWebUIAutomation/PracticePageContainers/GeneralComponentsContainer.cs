@@ -6,24 +6,25 @@ using SeleniumExtras.WaitHelpers;
 
 namespace CommitQualityWebUIAutomation.PracticePageContainers
 {
-    public class GeneralComponentsContainer : TestBase
+    public class GeneralComponentsContainer : PageBase
     {
-        IWebElement ClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='basic-click']"));
-        public IWebElement ButtonClickedMessage => Driver.FindElement(By.XPath("//button[text()='Click me']"));
-       public IWebElement DoubleButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='double-click']"));
-        public IWebElement ButtonDoubleClickedMessage => Driver.FindElement(By.XPath("//button[text()='Button double clicked']"));
-        public IWebElement RightButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='right-click']"));
-        public IWebElement ButtonRightClickedMessage => Driver.FindElement(By.XPath("//button[text()='Button right mouse clicked']"));
-       IWebElement RadioButton => Driver.FindElement(By.XPath("//input[@data-testid='option1']"));
-        IWebElement Option1ClickedMessage => Driver.FindElement(By.XPath("//div[@class='component-container']/p[text()='option1 clicked']"));
-        IWebElement RadioButton2 => Driver.FindElement(By.XPath("//input[@data-testid='option2']"));
-        IWebElement Option2ClickedMessage => Driver.FindElement(By.XPath("///div[@class='component-container']/p[text()='option2 clicked']"));
-        IWebElement SelectOptionDropDown => Driver.FindElement(By.XPath("//div[@data-testid='dropdown']"));
-        IWebElement CheckBox => Driver.FindElement(By.XPath("//div[@data-testid='practice-file-upload']"));
-        
         public GeneralComponentsContainer(IWebDriver driver) : base(driver)
         {
         }
+        IWebElement ClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='basic-click']"));
+        public IWebElement ButtonClickedMessage => Driver.FindElement(By.XPath("//p[text()='Button clicked']"));
+        public IWebElement DoubleButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='double-click']"));
+        public IWebElement ButtonDoubleClickedMessage => Driver.FindElement(By.XPath("//button[text()='Button double clicked']"));
+        public IWebElement RightButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='right-click']"));
+        public IWebElement ButtonRightClickedMessage => Driver.FindElement(By.XPath("//button[text()='Button right mouse clicked']"));
+        public IWebElement RadioButton => Driver.FindElement(By.XPath("//input[@data-testid='option1']"));
+        public IWebElement Option1ClickedMessage => Driver.FindElement(By.XPath("//div[@class='component-container']/p[text()='option1 clicked']"));
+        public IWebElement RadioButton2 => Driver.FindElement(By.XPath("//input[@data-testid='option2']"));
+        public IWebElement Option2ClickedMessage => Driver.FindElement(By.XPath("///div[@class='component-container']/p[text()='option2 clicked']"));
+        public IWebElement SelectOptionDropDown => Driver.FindElement(By.XPath("//div[@data-testid='dropdown']"));
+
+        public IReadOnlyCollection<IWebElement> Checkboxes => Driver.FindElements(By.XPath("//div[@class='checkbox-container']"));
+
 
         public void ClickMeButtonClick() => ClickMeButton.Click();
         public void DoubleClickMeButtonClick()
@@ -38,40 +39,72 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
             actions.ContextClick(RightButtonClickMeButton).Perform();
         }
         public void RadioButtonClick() => RadioButton.Click();
+        public void RadioButton2Click() => RadioButton2.Click();
         public void SelectOptionDropDownCkick() => SelectOptionDropDown.Click();
-        public void ClickCheckBox() => CheckBox.Click();
 
         public string GetButtonClickedMessage() => ButtonClickedMessage.Text;
         public string GetButtonDoubleClickedMessage() => ButtonDoubleClickedMessage.Text;
         public string GetButtonRightClickedMessage() => ButtonRightClickedMessage.Text;
+        public string GetOption1ClickedMessage() => Option1ClickedMessage.Text;
+        public string GetOption2ClickedMessage() => Option2ClickedMessage.Text;
 
-       
-        public void SelectFromDropDown(string value)
+
+        public void SelectFromDropDown(string optionText)
         {
             SelectElement select = new SelectElement(SelectOptionDropDown);
-            select.SelectByValue(value);
+            select.SelectByText(optionText);
         }
 
-            public void Check()
+        public string GetSelectedDropDownOption()
         {
-            if (!CheckBox.Selected)  
+            SelectElement select = new SelectElement(SelectOptionDropDown);
+            return select.SelectedOption.Text;
+        }
+
+        public void ClickAllCheckboxes()
+        {
+            foreach (var checkbox in Checkboxes)
             {
-                CheckBox.Click();
+                if (!checkbox.Selected)
+                {
+                    checkbox.Click();
+                }
             }
         }
 
-        public void Uncheck()
+        public void ClickCheckBox(int index)
         {
-            if (CheckBox.Selected)  
+            if (index >= 0 && index < Checkboxes.Count)
             {
-                CheckBox.Click();
+                Checkboxes.ElementAt(index).Click();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of range");
             }
         }
 
-        public bool IsChecked()
+        public void UncheckCheckboxes(int count)
         {
-            return CheckBox.Selected;
+            for (int i = 0; i < count && i < Checkboxes.Count; i++)
+            {
+                if (Checkboxes.ElementAt(i).Selected)
+                {
+                    Checkboxes.ElementAt(i).Click();
+                }
+            }
         }
+
+        public bool AreAllCheckboxesSelected()
+        {
+            return Checkboxes.All(checkbox => checkbox.Selected);
+        }
+
+        public bool IsCheckboxSelected(int index)
+        {
+            return Checkboxes.ElementAt(index).Selected;
+        }
+
 
         public string GetButtonRightClickedMessageWait()
         {
@@ -79,6 +112,7 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
             IWebElement message = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//p[text()='Button right mouse clicked']")));
             return message.Text;
         }
-    }
 
-}
+    }
+}     
+
