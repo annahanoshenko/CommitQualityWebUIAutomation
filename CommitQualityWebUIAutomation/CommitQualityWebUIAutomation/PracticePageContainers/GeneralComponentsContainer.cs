@@ -14,16 +14,17 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         IWebElement ClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='basic-click']"));
         public IWebElement ButtonClickedMessage => Driver.FindElement(By.XPath("//p[text()='Button clicked']"));
         public IWebElement DoubleButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='double-click']"));
-        public IWebElement ButtonDoubleClickedMessage => Driver.FindElement(By.XPath("//button[text()='Button double clicked']"));
+        public IWebElement ButtonDoubleClickedMessage => Driver.FindElement(By.XPath("//p[text()='Button double clicked']"));
         public IWebElement RightButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='right-click']"));
-        public IWebElement ButtonRightClickedMessage => Driver.FindElement(By.XPath("//button[text()='Button right mouse clicked']"));
+        public IWebElement ButtonRightClickedMessage => Driver.FindElement(By.XPath("//[text()='Button right mouse clicked']"));
         public IWebElement RadioButton => Driver.FindElement(By.XPath("//input[@data-testid='option1']"));
-        public IWebElement Option1ClickedMessage => Driver.FindElement(By.XPath("//div[@class='component-container']/p[text()='option1 clicked']"));
+        public IWebElement Option1ClickedMessage => Driver.FindElement(By.XPath("//p[text()='option1']"));
         public IWebElement RadioButton2 => Driver.FindElement(By.XPath("//input[@data-testid='option2']"));
-        public IWebElement Option2ClickedMessage => Driver.FindElement(By.XPath("///div[@class='component-container']/p[text()='option2 clicked']"));
-        public IWebElement SelectOptionDropDown => Driver.FindElement(By.XPath("//div[@data-testid='dropdown']"));
+        public IWebElement Option2ClickedMessage => Driver.FindElement(By.XPath("//p[text()='option2']"));
+        public IWebElement SelectOptionDropDown => Driver.FindElement(By.XPath("//div[@data-testid='dropdown']/select"));
 
-        public IReadOnlyCollection<IWebElement> Checkboxes => Driver.FindElements(By.XPath("//div[@class='checkbox-container']"));
+      //  public IWebElement SelectOption1DropDown => Driver.FindElement(By.XPath("//div[@data-testid='dropdown']/select"));
+        public IReadOnlyCollection<IWebElement> Checkboxes => Driver.FindElements(By.XPath("//input[@type='checkbox']"));
 
 
         public void ClickMeButtonClick() => ClickMeButton.Click();
@@ -38,21 +39,22 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
             Actions actions = new Actions(Driver);
             actions.ContextClick(RightButtonClickMeButton).Perform();
         }
-        public void RadioButtonClick() => RadioButton.Click();
-        public void RadioButton2Click() => RadioButton2.Click();
-        public void SelectOptionDropDownCkick() => SelectOptionDropDown.Click();
 
         public string GetButtonClickedMessage() => ButtonClickedMessage.Text;
         public string GetButtonDoubleClickedMessage() => ButtonDoubleClickedMessage.Text;
         public string GetButtonRightClickedMessage() => ButtonRightClickedMessage.Text;
+
+        public void RadioButtonClick() => RadioButton.Click();
+        public void RadioButton2Click() => RadioButton2.Click();
         public string GetOption1ClickedMessage() => Option1ClickedMessage.Text;
         public string GetOption2ClickedMessage() => Option2ClickedMessage.Text;
 
+        public void SelectOptionDropDownCkick() => SelectOptionDropDown.Click();
 
-        public void SelectFromDropDown(string optionText)
+        public void SelectFromDropDown(string value)
         {
-            SelectElement select = new SelectElement(SelectOptionDropDown);
-            select.SelectByText(optionText);
+            SelectElement option = new SelectElement(SelectOptionDropDown);
+            option.SelectByText(value);
         }
 
         public string GetSelectedDropDownOption()
