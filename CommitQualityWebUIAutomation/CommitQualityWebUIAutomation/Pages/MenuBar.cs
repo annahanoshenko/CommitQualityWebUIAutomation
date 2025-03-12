@@ -9,6 +9,7 @@ namespace CommitQualityWebUIAutomation.Pages
         private IWebElement LogoutBtn => Driver.FindElement(By.XPath("//a[@data-testid='navbar-logout']"));
         private IWebElement ProductsBtn => Driver.FindElement(By.XPath("//a[@data-testid='navbar-products']"));
         private IWebElement AddProductsBtn => Driver.FindElement(By.XPath("//a[@data-testid='navbar-addproduct']"));
+        private IWebElement PracticeBtn => Driver.FindElement(By.XPath("//a[@data-testid='navbar-practice']"));
 
         public MenuBar(IWebDriver driver) : base(driver)
         {
@@ -18,6 +19,7 @@ namespace CommitQualityWebUIAutomation.Pages
         public void ClickLogoutBtn() => LogoutBtn.Click();
         public void ClickProductsBtn() => ProductsBtn.Click();
         public void ClickAddProductsBtn() => AddProductsBtn.Click();
+        public void ClickPracticeBtn() => PracticeBtn.Click();
 
         public bool IsLoginBtnVisible() => LoginBtn.Displayed;
         public bool IsLogoutBtnVisible() => LogoutBtn.Displayed;
