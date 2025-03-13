@@ -18,9 +18,11 @@ namespace CommitQualityWebUIAutomation.CommitQualityAutomationTests
 
             IFrameContainer iFrameContainer = new IFrameContainer(Driver);
             iFrameContainer.SwitchToIFrame();
+            iFrameContainer.ClickPracticeBtnInsideIframe();
+            iFrameContainer.ClickGeneralComponentsContainerInsideIframe();
             iFrameContainer.ClickClickMeButtonInsideIframe();
             Assert.IsTrue(iFrameContainer.IsButtonClickedMessageDisplayed(), "Button clicked message is not displayed!");
-            iFrameContainer.SwitchToDefaultContetnt();
+            iFrameContainer.SwitchToDefaultContent();
         }
     }
 }

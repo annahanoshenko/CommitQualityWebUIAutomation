@@ -15,11 +15,11 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         {
         }
 
-       private IWebElement IFrame => wait.Until(ExpectedConditions.ElementExists(By.XPath("//div[@class='component-container']")));
-       private IWebElement PracticeBtnInsideIframe => Driver.FindElement(By.XPath("//div/a[@data-testid='navbar-practice']"));
-       private IWebElement GeneralComponentsContainerInsideIframe => Driver.FindElement(By.XPath("//div[@data-testid='practice-general']"));
-       private IWebElement ClickMeButtonInsideIframe => Driver.FindElement(By.XPath("//button[@data-testid='basic-click']"));
-        private IWebElement ButtonClickedMessage => wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//p[text()='Button clicked']")));
+        public IWebElement IFrame => wait.Until(ExpectedConditions.ElementExists(By.XPath("//iframe[@data-testid='iframe']")));
+        public IWebElement PracticeBtnInsideIframe => wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div/a[@data-testid='navbar-practice']")));
+        public IWebElement GeneralComponentsContainerInsideIframe => wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//div[@data-testid='practice-general']")));
+        public IWebElement ClickMeButtonInsideIframe => wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//button[@data-testid='basic-click']")));
+        public IWebElement ButtonClickedMessage => wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//p[text()='Button clicked']")));
 
         public void SwitchToIFrame()
         {
@@ -30,8 +30,7 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public void ClickGeneralComponentsContainerInsideIframe() => GeneralComponentsContainerInsideIframe.Click();
         public void ClickClickMeButtonInsideIframe() => ClickMeButtonInsideIframe.Click();
         public bool IsButtonClickedMessageDisplayed() => ButtonClickedMessage.Displayed;
-        public void SwitchToDefaultContetnt() => Driver.SwitchTo().DefaultContent();
-
+        public void SwitchToDefaultContent() => Driver.SwitchTo().DefaultContent();
 
     }
 }
