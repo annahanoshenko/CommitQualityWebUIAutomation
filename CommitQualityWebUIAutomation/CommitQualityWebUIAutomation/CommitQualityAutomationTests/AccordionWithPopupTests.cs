@@ -1,11 +1,6 @@
 ﻿using CommitQualityWebUIAutomation.Base;
+using CommitQualityWebUIAutomation.Pages;
 using CommitQualityWebUIAutomation.PracticePageContainers;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommitQualityWebUIAutomation.AutoTests
 {
@@ -19,11 +14,14 @@ namespace CommitQualityWebUIAutomation.AutoTests
             productsPage.ClickPracticeBtn();
 
             PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickAccordions();
-
-            AccordionsContainer accordions = new AccordionsContainer(Driver);
-            accordions.ClickAccordion1();
-            Assert.AreEqual("Accordion 1 clicked", accordions.GetAccordion1ClickedMessage());
+            practicepage.ClickPopups();
+           
+            PopupContainer popupContainer = new PopupContainer(Driver);
+            popupContainer.WaitForPopup();
+            Assert.IsTrue(popupContainer.IsPopupDisplayed(), "Popup is not displayed!");
+            popupContainer.ClickCloseBtn();
+            Assert.IsFalse(popupContainer.IsPopupDisplayed(), "Popup is still displayed after closing!");
         }
+        
     }
 }
