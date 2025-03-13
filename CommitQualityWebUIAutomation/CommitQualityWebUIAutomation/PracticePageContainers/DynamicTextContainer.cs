@@ -1,11 +1,7 @@
 ﻿using CommitQualityWebUIAutomation.Base;
 using Docker.DotNet.Models;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SeleniumExtras.WaitHelpers;
 
 namespace CommitQualityWebUIAutomation.PracticePageContainers
 {
@@ -15,11 +11,12 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         {
         }
 
-        public IWebElement AlwaysVisibleButton => Driver.FindElement(By.XPath("//button[@data-testid='dynamic-button1']"));
+        public IWebElement DynamicTextButton => wait.Until(ExpectedConditions.ElementExists(By.XPath("//button[@data-testid='dynamic-button1']")));
        
-        public IWebElement TextChangedMessage => wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//p[text()='Text changed']")));
+       
 
-        public void ClickAlwaysVisibleButton() => AlwaysVisibleButton.Click();
-        public bool IsTextChangedMessageDisplayed() => TextChangedMessage.Displayed;
+        public void ClickDynamicTextButton() => DynamicTextButton.Click();
+        public string GetDynamicButtonText() => DynamicTextButton.Text;
+        public bool IsDynamicButtonTextChanged() => wait.Until(ExpectedConditions.TextToBePresentInElement(DynamicTextButton, "I am visible after 5 seconds"));
     }
 }
