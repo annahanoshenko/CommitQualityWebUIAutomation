@@ -1,11 +1,5 @@
 ﻿using CommitQualityWebUIAutomation.Base;
-using Docker.DotNet.Models;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommitQualityWebUIAutomation.PracticePageContainers
 {
@@ -15,15 +9,13 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         {
         }
 
-        public IWebElement ChooseFileBtn => Driver.FindElement(By.XPath("//input[@id = 'file-input']"));
-        public IWebElement SubmitButton => Driver.FindElement(By.XPath("//input[@data-testid='file-upload']"));
-        public IWebElement FileUploadMessage => wait.Until(ExpectedConditions.ElementExists(By.XPath("//p[@data-testid='file-upload-message']")));
-
+        public IWebElement FileInput => Driver.FindElement(By.XPath("//input[@id ='file-input']"));
+        public IWebElement SubmitButton => Driver.FindElement(By.XPath("//button[@type='submit']"));
+       
         public void UploadFile(string filePath)
         {
-            FileUploadButton.SendKeys(filePath);
+            FileInput.SendKeys(filePath);
         }
-
-        public string GetFileUploadMessage() => FileUploadMessage.Text;
+        public void ClickSubmitButton() => SubmitButton.Click();
     }
 }

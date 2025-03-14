@@ -1,5 +1,4 @@
-﻿using CommitQualityWebUIAutomation.PracticePageContainers;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace CommitQualityWebUIAutomation.Base
