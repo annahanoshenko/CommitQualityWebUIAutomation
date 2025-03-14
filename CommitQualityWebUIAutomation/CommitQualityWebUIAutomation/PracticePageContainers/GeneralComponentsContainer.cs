@@ -22,8 +22,6 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public IWebElement RadioButton2 => Driver.FindElement(By.XPath("//input[@data-testid='option2']"));
         public IWebElement Option2ClickedMessage => Driver.FindElement(By.XPath("//p[text()='option2']"));
         public IWebElement SelectOptionDropDown => Driver.FindElement(By.XPath("//div[@data-testid='dropdown']/select"));
-
-      //  public IWebElement SelectOption1DropDown => Driver.FindElement(By.XPath("//div[@data-testid='dropdown']/select"));
         public IReadOnlyCollection<IWebElement> Checkboxes => Driver.FindElements(By.XPath("//input[@type='checkbox']"));
 
 
