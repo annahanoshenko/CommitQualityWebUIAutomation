@@ -1,27 +1,23 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using CommitQualityWebUIAutomation.Singleton;
+using OpenQA.Selenium;
 
 namespace CommitQualityWebUIAutomation.Base
 {
     public class TestBase
     {
-        public IWebDriver Driver;
+        protected IWebDriver Driver;
       
         [SetUp]
         public void Setup()
         {
-            Driver = new ChromeDriver();
+            Driver = DriverHolder.Instance;
             Driver.Navigate().GoToUrl("https://commitquality.com/");
-            Driver.Manage().Window.Maximize();
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
         [TearDown]
         public void TearDown()
         {
-            Driver.Quit();
-            Driver.Dispose();
-
+            DriverHolder.QuitDriver();
         }
     }
 }

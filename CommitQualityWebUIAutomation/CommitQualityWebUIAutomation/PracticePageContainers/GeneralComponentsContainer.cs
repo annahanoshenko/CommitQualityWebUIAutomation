@@ -15,7 +15,7 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public IWebElement DoubleButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='double-click']"));
         public IWebElement ButtonDoubleClickedMessage => Driver.FindElement(By.XPath("//p[text()='Button double clicked']"));
         public IWebElement RightButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='right-click']"));
-        public IWebElement ButtonRightClickedMessage => Driver.FindElement(By.XPath("//[text()='Button right mouse clicked']"));
+        public IWebElement ButtonRightClickedMessage => Driver.FindElement(By.XPath("//p[text()='Button right mouse clicked']"));
         public IWebElement RadioButton => Driver.FindElement(By.XPath("//input[@data-testid='option1']"));
         public IWebElement Option1ClickedMessage => Driver.FindElement(By.XPath("//p[text()='option1']"));
         public IWebElement RadioButton2 => Driver.FindElement(By.XPath("//input[@data-testid='option2']"));
