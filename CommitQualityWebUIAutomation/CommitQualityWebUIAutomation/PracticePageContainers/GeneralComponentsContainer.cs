@@ -16,10 +16,9 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public IWebElement ButtonDoubleClickedMessage => Driver.FindElement(By.XPath("//p[text()='Button double clicked']"));
         public IWebElement RightButtonClickMeButton => Driver.FindElement(By.XPath("//button[@data-testid='right-click']"));
         public IWebElement ButtonRightClickedMessage => Driver.FindElement(By.XPath("//p[text()='Button right mouse clicked']"));
-        public IWebElement RadioButton => Driver.FindElement(By.XPath("//input[@data-testid='option1']"));
-        public IWebElement Option1ClickedMessage => Driver.FindElement(By.XPath("//p[text()='option1']"));
-        public IWebElement RadioButton2 => Driver.FindElement(By.XPath("//input[@data-testid='option2']"));
-        public IWebElement Option2ClickedMessage => Driver.FindElement(By.XPath("//p[text()='option2']"));
+        public IWebElement RadioButtonsContainerWebElement => Driver.FindElement(By.XPath("//div[contains(@class,'radio-buttons-container')]"));
+        public RadioButtonsContainer RadioButtonsContainer => new RadioButtonsContainer(RadioButtonsContainerWebElement);
+        public IWebElement OptionClickedMessage => Driver.FindElement(By.XPath("//div[contains(@class,'radio-buttons-container')]//p"));
         public IWebElement SelectOptionDropDown => Driver.FindElement(By.XPath("//div[@data-testid='dropdown']/select"));
         public IReadOnlyCollection<IWebElement> Checkboxes => Driver.FindElements(By.XPath("//input[@type='checkbox']"));
 
@@ -40,12 +39,18 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public string GetButtonDoubleClickedMessage() => ButtonDoubleClickedMessage.Text;
         public string GetButtonRightClickedMessage() => ButtonRightClickedMessage.Text;
 
-        public void RadioButtonClick() => RadioButton.Click();
-        public void RadioButton2Click() => RadioButton2.Click();
-        public string GetOption1ClickedMessage() => Option1ClickedMessage.Text;
-        public string GetOption2ClickedMessage() => Option2ClickedMessage.Text;
-
+        public string GetOptionClickedMessage() => OptionClickedMessage.Text;
+       
         public void SelectOptionDropDownCkick() => SelectOptionDropDown.Click();
+        public RadioButtonsContainer GetRadioButtonsContainer()
+        {
+            var radioGroupElement = Driver.FindElement(By.XPath("//div[@data-testid='radio-group']"));
+            return new RadioButtonsContainer(radioGroupElement);
+        }
+        public void SelectRadioButtonOption(string optionName)
+        {
+            RadioButtonsContainer.SelectByName(optionName);
+        }
 
         public void SelectFromDropDown(string value)
         {

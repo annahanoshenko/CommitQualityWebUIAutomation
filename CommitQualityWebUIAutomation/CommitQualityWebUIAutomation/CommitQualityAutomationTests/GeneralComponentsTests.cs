@@ -1,4 +1,5 @@
 ﻿using CommitQualityWebUIAutomation.Base;
+using CommitQualityWebUIAutomation.PracticePageContainers;
 
 namespace CommitQualityWebUIAutomation.AutoTests
 {
@@ -38,18 +39,18 @@ namespace CommitQualityWebUIAutomation.AutoTests
             Assert.AreEqual("Button right mouse clicked", generalComponents.GetButtonRightClickedMessage());
         }
 
-        [Test]
-        public void TestRadioButton()
+        [TestCase("option1")]
+        [TestCase("option2")]
+        public void TestRadioButton(string optionName)
         {
             productsPage.ClickPracticeBtn();
 
             practicePage.ClickGeneralComponents();
+          
+            generalComponents.SelectRadioButtonOption(optionName);
+            string selectRadioBtn = generalComponents.GetOptionClickedMessage();
 
-            generalComponents.RadioButtonClick();
-            Assert.AreEqual("option1 clicked", generalComponents.GetOption1ClickedMessage());
-
-            generalComponents.RadioButton2Click();
-            Assert.AreEqual("option2 clicked", generalComponents.GetOption2ClickedMessage());
+            Assert.AreEqual($"{optionName} clicked", selectRadioBtn, "RadioButton selection did not match!");
         }
 
         [Test]
