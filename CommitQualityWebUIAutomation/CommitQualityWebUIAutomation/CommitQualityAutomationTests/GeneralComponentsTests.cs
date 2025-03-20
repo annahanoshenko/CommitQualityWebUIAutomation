@@ -1,25 +1,17 @@
 ﻿using CommitQualityWebUIAutomation.Base;
-using CommitQualityWebUIAutomation.Pages;
-using CommitQualityWebUIAutomation.PracticePageContainers;
-using OpenQA.Selenium;
-
 
 namespace CommitQualityWebUIAutomation.AutoTests
 {
     [TestFixture]
-    public class GeneralComponentsTests : TestBase
+    public class GeneralComponentsTests : CommitQualityTestBase
     {
-
         [Test]
         public void TestClickButton()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickGeneralComponents();
+            practicePage.ClickGeneralComponents();
            
-            GeneralComponentsContainer generalComponents = new GeneralComponentsContainer(Driver);
             generalComponents.ClickMeButtonClick();
             Assert.AreEqual("Button clicked", generalComponents.GetButtonClickedMessage());
         }
@@ -27,13 +19,10 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void TestDoubleClickButton()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickGeneralComponents();
+            practicePage.ClickGeneralComponents();
 
-            GeneralComponentsContainer generalComponents = new GeneralComponentsContainer(Driver);
             generalComponents.DoubleClickMeButtonClick();
             Assert.AreEqual("Button double clicked", generalComponents.GetButtonDoubleClickedMessage());
         }
@@ -41,13 +30,10 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void TestRightClickButton()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickGeneralComponents();
+            practicePage.ClickGeneralComponents();
 
-            GeneralComponentsContainer generalComponents = new GeneralComponentsContainer(Driver);
             generalComponents.RightClickMeButtonClick();
             Assert.AreEqual("Button right mouse clicked", generalComponents.GetButtonRightClickedMessage());
         }
@@ -55,13 +41,10 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void TestRadioButton()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickGeneralComponents();
+            practicePage.ClickGeneralComponents();
 
-            GeneralComponentsContainer generalComponents = new GeneralComponentsContainer(Driver);
             generalComponents.RadioButtonClick();
             Assert.AreEqual("option1 clicked", generalComponents.GetOption1ClickedMessage());
 
@@ -72,13 +55,10 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void TestSelectOption1DropDown() 
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickGeneralComponents();
+            practicePage.ClickGeneralComponents();
 
-            GeneralComponentsContainer generalComponents = new GeneralComponentsContainer(Driver);
             generalComponents.SelectFromDropDown("Option 1");
             string selectedOption = generalComponents.GetSelectedDropDownOption();
             Assert.AreEqual("Option 1", selectedOption, "Dropdown selection did not match!");
@@ -87,13 +67,10 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void Test_ThatAllCheckboxButtonsAreSelected()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickGeneralComponents();
+            practicePage.ClickGeneralComponents();
 
-            GeneralComponentsContainer generalComponents = new GeneralComponentsContainer(Driver);
             generalComponents.ClickAllCheckboxes();
             Assert.IsTrue(generalComponents.AreAllCheckboxesSelected(), "Not all checkboxes were selected!");
         }
@@ -101,13 +78,10 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void Test_CanUncheckOf2Checkboxes()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickGeneralComponents();
+            practicePage.ClickGeneralComponents();
 
-            GeneralComponentsContainer generalComponents = new GeneralComponentsContainer(Driver);
             generalComponents.ClickAllCheckboxes();
             generalComponents.UncheckCheckboxes(2);
            

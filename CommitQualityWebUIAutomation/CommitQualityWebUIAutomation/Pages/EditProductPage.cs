@@ -25,6 +25,16 @@ namespace CommitQualityWebUIAutomation.Pages
         public void ClickUpdateBtn() => UpdateBtn.Click();
         public void ClickCancelBtn() => CancelBtn.Click();
 
+        public string GetEditProductName() => ProductNameTitleField.Text;
+        public string GetEditProductPrice() => PriceField.Text;
+        public string GetEditProductDateStocked() => DataStockedField.Text;
+
+        public string GetEditProductNameErrorMessage() => ProductNameErrorMessage.Text;
+        public string GetEditProductPriceErrorMessage() => ProductPriceErrorMessage.Text;
+        public string GeEditProductDateStockedErrorMessage() => DateStockedErrorMessage.Text;
+        public string GetAllFiilingFieldsEditProductErrorMessage() => Driver.FindElement(By.XPath("//div[@data-testid='fillin-all-fields-validation']")).Text;
+        public string GetErrorsMustBeResolvedBeforeSubmittingEditProductErrorMessage() => Driver.FindElement(By.XPath("//div[@data-testid='all-fields-validation']")).Text;
+
         public void FillingProductFields(ProductEntity product)
         {
             ProductNameTitleField.Clear();
@@ -42,7 +52,7 @@ namespace CommitQualityWebUIAutomation.Pages
             DataStockedField.Clear();
             ClickUpdateBtn();
         }
-        public void ClearWithBackSpace()
+        public void ClearAllEditProductPageFields()
         {
             int numberOfCharactersToDelete = ProductNameTitleField.GetAttribute("value").Length;
             for (int i = 0; i < numberOfCharactersToDelete; i++)
@@ -62,23 +72,6 @@ namespace CommitQualityWebUIAutomation.Pages
             js.ExecuteScript("arguments[0].value = '';", DataStockedField);
 
             ClickUpdateBtn();
-
-            //numberOfCharactersToDelete = DataStockedField.GetAttribute("value").Length;
-            //for (int i = 0; i < numberOfCharactersToDelete; i++)
-            //{
-            //    DataStockedField.SendKeys(Keys.Backspace);
-            //}
-
         }
-
-        public string GetEditProductName() => ProductNameTitleField.Text;
-        public string GetEditProductPrice() => PriceField.Text;
-        public string GetEditProductDateStocked() => DataStockedField.Text;
-
-        public string GetEditProductNameErrorMessage() => ProductNameErrorMessage.Text;
-        public string GetEditProductPriceErrorMessage() => ProductPriceErrorMessage.Text;
-        public string GeEditProductDateStockedErrorMessage() => DateStockedErrorMessage.Text;
-        public string GetAllFiilingFieldsEditProductErrorMessage() => Driver.FindElement(By.XPath("//div[@data-testid='fillin-all-fields-validation']")).Text;
-        public string GetErrorsMustBeResolvedBeforeSubmittingEditProductErrorMessage() => Driver.FindElement(By.XPath("//div[@data-testid='all-fields-validation']")).Text;
     }
 }

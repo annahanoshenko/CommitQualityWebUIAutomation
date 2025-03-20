@@ -5,6 +5,10 @@ namespace CommitQualityWebUIAutomation.Pages
 {
     public class PracticePage : MenuBar
     {
+        public PracticePage(IWebDriver driver) : base(driver)
+        {
+        }
+
         IWebElement GeneralComponentsContainer => Driver.FindElement(By.XPath("//div[@data-testid='practice-general']"));
         IWebElement AccordionsContainer => Driver.FindElement(By.XPath("//div[@data-testid='practice-accordions']"));
         IWebElement PopupsContainer => Driver.FindElement(By.XPath("//div[@data-testid='practice-random-overlay']"));
@@ -17,10 +21,6 @@ namespace CommitQualityWebUIAutomation.Pages
         IWebElement MockDatalayerContainer => Driver.FindElement(By.XPath("//div[@data-testid='practice-mock-data-layer']"));
         IWebElement FileDownloadContainer => Driver.FindElement(By.XPath("//div[@data-testid='practice-file-download']"));
         IWebElement TimeTestingContainer => Driver.FindElement(By.XPath("//div[@data-testid='practice-clock']"));
-
-        public PracticePage(IWebDriver driver) : base(driver)
-        {
-        }
 
         public void ClickGeneralComponents() => GeneralComponentsContainer.Click();
         public void ClickAccordions() => AccordionsContainer.Click();

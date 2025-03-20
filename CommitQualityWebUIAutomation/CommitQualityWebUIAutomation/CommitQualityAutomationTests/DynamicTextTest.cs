@@ -1,21 +1,17 @@
 ﻿using CommitQualityWebUIAutomation.Base;
-using CommitQualityWebUIAutomation.Pages;
 using CommitQualityWebUIAutomation.PracticePageContainers;
-
 
 namespace CommitQualityWebUIAutomation.CommitQualityAutomationTests
 {
     [TestFixture]
-    public class DynamicTextTest : TestBase
+    public class DynamicTextTest : CommitQualityTestBase
     {
         [Test]
         public void ButtonTextChangesAfterClicking()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickDynamicText();
+            practicePage.ClickDynamicText();
 
             DynamicTextContainer dynamicTextContainer = new DynamicTextContainer(Driver);
             string initialText = dynamicTextContainer.GetDynamicButtonText();

@@ -1,27 +1,22 @@
 ﻿using CommitQualityWebUIAutomation.Base;
 using CommitQualityWebUIAutomation.Entities;
-using CommitQualityWebUIAutomation.Pages;
-using CommitQualityWebUIAutomation.PracticePageContainers;
 
 namespace CommitQualityWebUIAutomation.CommitQualityAutomationTests
 {
     [TestFixture]
-    public class ContactUsFormTests : TestBase
+    public class ContactUsFormTests : CommitQualityTestBase
     {
         [Test]
         public void ShouldSendContactUsForm_WhenDataIsValid()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickContactUsForm();
+            practicePage.ClickContactUsForm();
 
-            ContactUsFormContainer contactUsFormContainer = new ContactUsFormContainer(Driver);
             ContactUsFormUserEntity contactUsFormUser = new ContactUsFormUserEntity("John Doe", "johndoe22@gmail.com", "General", "01/01/1990");
 
             contactUsFormContainer.FillingContuctUsFieldsAndCheckbox(contactUsFormUser);
-            
+
             string selectedOption = contactUsFormContainer.GetSelectQueryType();
             string actualSuccessMessage = contactUsFormContainer.GetSuccessMessageText();
             string expectSuccessMessage = "Thanks for contacting us, we will never respond!";
@@ -32,13 +27,10 @@ namespace CommitQualityWebUIAutomation.CommitQualityAutomationTests
         [Test]
         public void ShouldNotSubmitContacUsForm_WhenRequiredEmailFieldIsEmpty()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickContactUsForm();
+            practicePage.ClickContactUsForm();
 
-            ContactUsFormContainer contactUsFormContainer = new ContactUsFormContainer(Driver);
             ContactUsFormUserEntity contactUsFormUser = new ContactUsFormUserEntity("John Doe", "", "General", "01/01/1990");
 
             contactUsFormContainer.FillingContuctUsFieldsAndCheckbox(contactUsFormUser);
@@ -53,13 +45,10 @@ namespace CommitQualityWebUIAutomation.CommitQualityAutomationTests
         [Test]
         public void ShouldNotSubmitContacUsForm_WhenRequiredCheckboxIsNotChecked()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickContactUsForm();
+            practicePage.ClickContactUsForm();
 
-            ContactUsFormContainer contactUsFormContainer = new ContactUsFormContainer(Driver);
             ContactUsFormUserEntity contactUsFormUser = new ContactUsFormUserEntity("John Doe", "johndoe22@gmail.com", "General", "01/01/1990");
 
             contactUsFormContainer.FillingContuctUsFields(contactUsFormUser);

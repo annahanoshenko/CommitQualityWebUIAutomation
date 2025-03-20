@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 
 namespace CommitQualityWebUIAutomation.PracticePageContainers
 {
@@ -31,7 +30,6 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
             Actions actions = new Actions(Driver);
             actions.DoubleClick(DoubleButtonClickMeButton).Perform();
         }
-
         public void RightClickMeButtonClick()
         {
             Actions actions = new Actions(Driver);
@@ -72,18 +70,6 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
             }
         }
 
-        public void ClickCheckBox(int index)
-        {
-            if (index >= 0 && index < Checkboxes.Count)
-            {
-                Checkboxes.ElementAt(index).Click();
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(index), "Index out of range");
-            }
-        }
-
         public void UncheckCheckboxes(int count)
         {
             for (int i = 0; i < count && i < Checkboxes.Count; i++)
@@ -104,15 +90,6 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         {
             return Checkboxes.ElementAt(index).Selected;
         }
-
-
-        public string GetButtonRightClickedMessageWait()
-        {
-            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-            IWebElement message = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//p[text()='Button right mouse clicked']")));
-            return message.Text;
-        }
-
     }
 }     
 

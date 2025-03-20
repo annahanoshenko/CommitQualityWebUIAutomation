@@ -12,7 +12,6 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public ContactUsFormContainer(IWebDriver driver) : base(driver)
         {
         }
-        
         private IWebElement NameField => Driver.FindElement(By.XPath("//input[@id='name']"));
         private IWebElement NameFieldErrorMsg => Driver.FindElement(By.XPath("//div[@class='error']"));
         private IWebElement EmailField => Driver.FindElement(By.XPath("//input[@id='email']"));

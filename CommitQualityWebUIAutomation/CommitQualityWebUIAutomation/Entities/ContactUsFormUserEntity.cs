@@ -1,5 +1,4 @@
-﻿
-namespace CommitQualityWebUIAutomation.Entities
+﻿namespace CommitQualityWebUIAutomation.Entities
 {
     public class ContactUsFormUserEntity
     {

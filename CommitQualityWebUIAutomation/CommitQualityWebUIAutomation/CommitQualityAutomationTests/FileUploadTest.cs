@@ -1,21 +1,17 @@
 ﻿using CommitQualityWebUIAutomation.Base;
-using CommitQualityWebUIAutomation.Pages;
 using CommitQualityWebUIAutomation.PracticePageContainers;
 
 namespace CommitQualityWebUIAutomation.CommitQualityAutomationTests
 {
     [TestFixture]
-    internal class FileUploadTest : TestBase
+    internal class FileUploadTest : CommitQualityTestBase
     {
         [Test]
         public void UploadFile_IsSuccessfully()
         {
-
-           ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickFileUpload();
+            practicePage.ClickFileUpload();
 
             FileUploadContainer fileUploadContainer = new FileUploadContainer(Driver);
             fileUploadContainer.UploadFile("C:/Users/Anna/OneDrive/Pictures/Screenshots/Screenshot 2025-01-08 134315.png");

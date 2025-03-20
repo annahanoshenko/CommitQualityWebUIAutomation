@@ -12,7 +12,6 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public IWebElement DownLoadFileBtn => Driver.FindElement(By.XPath("//button[text()='Download File']"));
         public void DownloadFile() => DownLoadFileBtn.Click();
 
-
         public FileInfo WaitForFileDownload(string directoryPath, string fileName, int timeToDownload)
         {
             bool isFileDownloaded = true;

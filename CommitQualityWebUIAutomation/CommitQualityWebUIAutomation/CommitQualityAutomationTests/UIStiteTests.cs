@@ -1,22 +1,16 @@
 using CommitQualityWebUIAutomation.Base;
 using CommitQualityWebUIAutomation.Entities;
 using CommitQualityWebUIAutomation.Helpers;
-using CommitQualityWebUIAutomation.Pages;
-using CommitQualityWebUIAutomation.WebElements;
-using OpenQA.Selenium;
 
 namespace CommitQualityWebUIAutomation.AutoTests
 {
     [TestFixture]
-    public class Tests : TestBase
+    public class Tests : CommitQualityTestBase
     {
         [Test]
         public void ShouldLoginExistingUser_WhenDataIsValid()
         {
             UserEntity user = new UserEntity("test", "test");
-
-            LoginPage loginPage = new LoginPage(Driver);
-            ProductsPage productsPage = new ProductsPage(Driver);
 
             loginPage.LoginUser(user);
 
@@ -30,9 +24,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         {
             UserEntity user = new UserEntity("", "");
 
-            LoginPage loginPage = new LoginPage(Driver);
-            ProductsPage productsPage = new ProductsPage(Driver);
-
             loginPage.LoginUser(user);
 
             string actualErrorMessage = loginPage.GetLoginErrorMessage();
@@ -45,8 +36,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         public void User_CanLogoutSuccessfully()
         {
             UserEntity user = new UserEntity("test", "test");
-            ProductsPage productsPage = new ProductsPage(Driver);
-            LoginPage loginPage = new LoginPage(Driver);
             
             loginPage.LoginUser(user);
 
@@ -57,12 +46,7 @@ namespace CommitQualityWebUIAutomation.AutoTests
 
         [Test]
         public void ShouldAddProduct_WhenDataIsValid()
-        {
-            MenuBar menuBar = new MenuBar(Driver);
-            ProductRow productRow = new ProductRow(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
-            ProductsPage productsPage = new ProductsPage(Driver);
-            
+        { 
             string productName = StringsHelper.GenerateRandomString(10);
             ProductEntity product = new ProductEntity(productName, "100", "09/01/2019");
 
@@ -75,8 +59,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotAddProduct_WhenProductNameFieldIsEmpty()
         {
-            MenuBar menuBar = new MenuBar(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
             ProductEntity product = new ProductEntity("", "100", "09/01/2019");
 
             addProductPage.FillingProductFields(product);
@@ -97,8 +79,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotAddProduct_WhenProductPriceFieldIsEmpty()
         {
-            MenuBar menuBar = new MenuBar(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
             ProductEntity product = new ProductEntity("Product3", "", "09/01/2019");
 
             addProductPage.FillingProductFields(product);
@@ -119,8 +99,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotAddProduct_WhenProductDateStockedFieldIsInTheFuture()
         {
-            MenuBar menuBar = new MenuBar(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
             ProductEntity product = new ProductEntity("Product3", "100", "09/01/2222");
 
             addProductPage.FillingProductFields(product);
@@ -137,8 +115,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ProductFilterByName_WorksCorrectly()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
-
             string productNameToFilter = "Product 1";
             productsPage.EnterProductName(productNameToFilter);
             
@@ -152,7 +128,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotFilterProduct_WhenDataIsInvalid()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.EnterProductName("YYY");
             productsPage.ClickFilterBtn();
             string actualErrorMessage = productsPage.GetFilteringErrorMessage();
@@ -164,7 +139,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void FilteringByProductNameField_ResetCorrectly()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.EnterProductName("Product 1");
             productsPage.ClickFilterBtn();
 
@@ -183,19 +157,15 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void EditingProductInTheProductRow_IsSuccessfully()
         {
-            LoginPage loginPage = new LoginPage(Driver);
             UserEntity user = new UserEntity("test", "test");
             loginPage.LoginUser(user);
 
-            ProductsPage productsPage = new ProductsPage(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
             string productName = StringsHelper.GenerateRandomString(8);
             ProductEntity product = new ProductEntity(productName, "105", "03/02/2022");
             addProductPage.FillingProductFields(product);
 
             productsPage.EditProduct(productName);
 
-            EditProductPage editProductPage = new EditProductPage(Driver);
             string editProductName = StringsHelper.GenerateRandomString(8);
             ProductEntity editProduct = new ProductEntity(editProductName, "200", "03/02/2021");
             editProductPage.FillingProductFields(editProduct);
@@ -210,21 +180,17 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotEditProduct_WhenAllRequiredFieldsAreEmpty()
         {
-            LoginPage loginPage = new LoginPage(Driver);
             UserEntity user = new UserEntity("test", "test");
             loginPage.LoginUser(user);
 
-            ProductsPage productsPage = new ProductsPage(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
             string productName = StringsHelper.GenerateRandomString(8);
             ProductEntity product = new ProductEntity(productName, "105", "03/02/2022");
             addProductPage.FillingProductFields(product);
 
             productsPage.EditProduct(productName);
 
-            EditProductPage editProductPage = new EditProductPage(Driver);
             ProductEntity editProduct = new ProductEntity("", "", "");
-            editProductPage.ClearWithBackSpace();
+            editProductPage.ClearAllEditProductPageFields();
 
             string actualEditProductNameErrorMessage = editProductPage.GetEditProductNameErrorMessage();
             string expectedEditProductNameErrorMessage = "Name must be at least 2 characters.";
@@ -233,10 +199,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
             string actualEditProductPriceErrorMessage = editProductPage.GetEditProductPriceErrorMessage();
             string expectedEditProductPriceErrorMessage = "Price must not be empty and within 10 digits";
             Assert.That(actualEditProductPriceErrorMessage, Is.EqualTo(expectedEditProductPriceErrorMessage));
-
-            //string actualEditProductDateStockeErrorMessage = editProductPage.GeEditProductDateStockedErrorMessage();
-            //string expectedEditProductDateStockeErrorMessage = "Date must not be empty.";
-            //Assert.That(actualEditProductDateStockeErrorMessage, Is.EqualTo(expectedEditProductDateStockeErrorMessage));
 
             string actualFiilingFieldsErrorMessage = editProductPage.GetAllFiilingFieldsEditProductErrorMessage();
             string expectedFiilingFieldsErrorMessage = "Please fill in all fields";
@@ -250,10 +212,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void DeletingProduct_ShouldNotBeVisibleAfterPageRefresh()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
-            LoginPage loginPage = new LoginPage(Driver);
-
             UserEntity user = new UserEntity("test", "test");
 
             loginPage.LoginUser(user);

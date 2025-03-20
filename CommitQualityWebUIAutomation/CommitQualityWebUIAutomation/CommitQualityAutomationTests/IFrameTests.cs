@@ -1,20 +1,17 @@
 ﻿using CommitQualityWebUIAutomation.Base;
-using CommitQualityWebUIAutomation.Pages;
 using CommitQualityWebUIAutomation.PracticePageContainers;
 
 namespace CommitQualityWebUIAutomation.CommitQualityAutomationTests
 {
     [TestFixture]
-    public class IFrameTests : TestBase
+    public class IFrameTests : CommitQualityTestBase
     {
         [Test]
         public void CanTestClickMeButtonInIFrame()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickIframes();
+            practicePage.ClickIframes();
 
             IFrameContainer iFrameContainer = new IFrameContainer(Driver);
             iFrameContainer.SwitchToIFrame();

@@ -1,21 +1,17 @@
 ﻿using CommitQualityWebUIAutomation.Base;
-using CommitQualityWebUIAutomation.Pages;
 using CommitQualityWebUIAutomation.PracticePageContainers;
-
 
 namespace CommitQualityWebUIAutomation.CommitQualityAutomationTests
 {
     [TestFixture]
-    public class DownLoadFileTest : TestBase
+    public class DownLoadFileTest : CommitQualityTestBase
     {
         [Test]
         public void TestFileDownload()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.ClickPracticeBtn();
 
-            PracticePage practicepage = new PracticePage(Driver);
-            practicepage.ClickFileDownload();
+            practicePage.ClickFileDownload();
 
             DownLoadFileContainer downLoadFileContainer = new DownLoadFileContainer(Driver);
             string downloadPath = @"C:\Users\Anna\Downloads"; 

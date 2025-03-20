@@ -1,11 +1,6 @@
 ﻿using CommitQualityWebUIAutomation.Base;
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommitQualityWebUIAutomation.PracticePageContainers
 {
@@ -31,6 +26,5 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public void ClickClickMeButtonInsideIframe() => ClickMeButtonInsideIframe.Click();
         public bool IsButtonClickedMessageDisplayed() => ButtonClickedMessage.Displayed;
         public void SwitchToDefaultContent() => Driver.SwitchTo().DefaultContent();
-
     }
 }
