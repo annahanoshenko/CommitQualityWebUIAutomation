@@ -1,11 +1,13 @@
 ﻿using CommitQualityWebUIAutomation.Entities;
 using OpenQA.Selenium;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CommitQualityWebUIAutomation.Pages
 {
     public class AddProductPage : MenuBar
     {
+        public AddProductPage(IWebDriver driver) : base(driver)
+        {
+        }
         private IWebElement ProductNameTitle => Driver.FindElement(By.XPath("//input[@data-testid='product-textbox']"));
         private IWebElement ProductPrice => Driver.FindElement(By.Id("price"));
         private IWebElement DataStocked => Driver.FindElement(By.Id("dateStocked"));
@@ -14,16 +16,18 @@ namespace CommitQualityWebUIAutomation.Pages
         private IWebElement ProductNameErrorMessage => Driver.FindElement(By.XPath("//div[label[@for='name']]//div[@class='error-message']"));
         private IWebElement ProductPriceErrorMessage => Driver.FindElement(By.XPath("//div[label[@for='price']]//div[@class='error-message']"));
         private IWebElement DateStockedErrorMessage => Driver.FindElement(By.XPath("//div[label[@for='dateStocked']]//div[@class='error-message']"));
-        
-        public AddProductPage(IWebDriver driver) : base(driver)
-        {
-        }
-
+       
         public void EnterProductName(string productName) => ProductNameTitle.SendKeys(productName);
         public void EnterProductPrice(string productPrice) => ProductPrice.SendKeys(productPrice);
         public void EnterDateStocked(string dateStocked) => DataStocked.SendKeys(dateStocked);
         public void ClickSubmitBtn() => SubmitProductBtn.Click();
         public void ClickCancleBtn() => CancleBtn.Click();
+
+        public string GetProductNameErrorMessage() => ProductNameErrorMessage.Text;
+        public string GetProductPriceErrorMessage() => ProductPriceErrorMessage.Text;
+        public string GetDateStockedErrorMessage() => DateStockedErrorMessage.Text;
+        public string GetAllFiilingFieldsErrorMessage() => Driver.FindElement(By.XPath("//div[@data-testid='fillin-all-fields-validation']")).Text;
+        public string GetErrorsMustBeResolvedBeforeSubmittingErrorMessage() => Driver.FindElement(By.XPath("//div[@data-testid='all-fields-validation']")).Text;
 
         public void FillingProductFields(ProductEntity product)
         {
@@ -33,11 +37,5 @@ namespace CommitQualityWebUIAutomation.Pages
             EnterDateStocked(product.DateStocked);
             ClickSubmitBtn();
         }
-
-        public string GetProductNameErrorMessage() => ProductNameErrorMessage.Text;
-        public string GetProductPriceErrorMessage() => ProductPriceErrorMessage.Text;
-        public string GetDateStockedErrorMessage() => DateStockedErrorMessage.Text;
-        public string GetAllFiilingFieldsErrorMessage() => Driver.FindElement(By.XPath("//div[@data-testid='fillin-all-fields-validation']")).Text;
-        public string GetErrorsMustBeResolvedBeforeSubmittingErrorMessage() => Driver.FindElement(By.XPath("//div[@data-testid='all-fields-validation']")).Text;
     }
 }
