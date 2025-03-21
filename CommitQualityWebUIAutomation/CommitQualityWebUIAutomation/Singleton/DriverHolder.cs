@@ -5,10 +5,10 @@ namespace CommitQualityWebUIAutomation.Singleton
 {
     public class DriverHolder
     {
-        private static IWebDriver _driver;
+        private static IWebDriver? _driver;
 
         private DriverHolder() { }
-        public static IWebDriver Instance
+        public static IWebDriver Driver
         {
             get
             {

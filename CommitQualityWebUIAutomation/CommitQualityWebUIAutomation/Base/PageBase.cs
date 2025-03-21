@@ -34,5 +34,10 @@ namespace CommitQualityWebUIAutomation.Base
         {
             return webElement.GetAttribute("class").Contains(className);
         }
+
+        public void SwitchToIFrame(IWebElement iFrameWebElement)
+        {
+            Driver.SwitchTo().Frame(iFrameWebElement);
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace CommitQualityWebUIAutomation.Base
         [SetUp]
         public void Setup()
         {
-            Driver = DriverHolder.Instance;
+            Driver = DriverHolder.Driver;
             Driver.Navigate().GoToUrl("https://commitquality.com/");
         }
 

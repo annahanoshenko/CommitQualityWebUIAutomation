@@ -25,10 +25,6 @@ namespace CommitQualityWebUIAutomation.Pages
         public void ClickUpdateBtn() => UpdateBtn.Click();
         public void ClickCancelBtn() => CancelBtn.Click();
 
-        public string GetEditProductName() => ProductNameTitleField.Text;
-        public string GetEditProductPrice() => PriceField.Text;
-        public string GetEditProductDateStocked() => DataStockedField.Text;
-
         public string GetEditProductNameErrorMessage() => ProductNameErrorMessage.Text;
         public string GetEditProductPriceErrorMessage() => ProductPriceErrorMessage.Text;
         public string GeEditProductDateStockedErrorMessage() => DateStockedErrorMessage.Text;
@@ -45,13 +41,7 @@ namespace CommitQualityWebUIAutomation.Pages
             EditDataStockedField(product.DateStocked);
             ClickUpdateBtn();
         }
-        public void FillingProductFieldsWithEmpty()
-        {
-            ProductNameTitleField.Clear();
-            PriceField.Clear();
-            DataStockedField.Clear();
-            ClickUpdateBtn();
-        }
+        
         public void ClearAllEditProductPageFields()
         {
             int numberOfCharactersToDelete = ProductNameTitleField.GetAttribute("value").Length;

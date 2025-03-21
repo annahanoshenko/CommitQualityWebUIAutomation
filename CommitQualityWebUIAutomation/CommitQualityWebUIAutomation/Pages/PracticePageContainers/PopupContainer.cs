@@ -3,7 +3,7 @@ using CommitQualityWebUIAutomation.Extentions;
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
 
-namespace CommitQualityWebUIAutomation.PracticePageContainers
+namespace CommitQualityWebUIAutomation.Pages.PracticePageContainers
 {
     public class PopupContainer : PageBase
     {
@@ -24,11 +24,11 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
             {
                 return closeButton.Exists();
             }
-            catch(NoSuchElementException)
+            catch (NoSuchElementException)
             {
                 return false;
             }
         }
-        
+
     }
 }

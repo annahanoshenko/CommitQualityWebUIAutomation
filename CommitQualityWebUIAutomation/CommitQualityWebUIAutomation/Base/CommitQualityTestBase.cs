@@ -1,5 +1,5 @@
 ﻿using CommitQualityWebUIAutomation.Pages;
-using CommitQualityWebUIAutomation.PracticePageContainers;
+using CommitQualityWebUIAutomation.Pages.PracticePageContainers;
 using CommitQualityWebUIAutomation.WebElements;
 
 namespace CommitQualityWebUIAutomation.Base

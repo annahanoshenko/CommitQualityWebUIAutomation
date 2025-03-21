@@ -1,7 +1,7 @@
 ﻿using CommitQualityWebUIAutomation.Base;
 using OpenQA.Selenium;
 
-namespace CommitQualityWebUIAutomation.PracticePageContainers
+namespace CommitQualityWebUIAutomation.Pages.PracticePageContainers
 {
     public class FileUploadContainer : PageBase
     {
@@ -11,7 +11,7 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
 
         public IWebElement FileInput => Driver.FindElement(By.XPath("//input[@id ='file-input']"));
         public IWebElement SubmitButton => Driver.FindElement(By.XPath("//button[@type='submit']"));
-       
+
         public void UploadFile(string filePath)
         {
             FileInput.SendKeys(filePath);

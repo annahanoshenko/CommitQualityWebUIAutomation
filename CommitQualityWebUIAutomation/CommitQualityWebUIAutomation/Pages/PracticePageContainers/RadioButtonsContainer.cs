@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace CommitQualityWebUIAutomation.PracticePageContainers
+namespace CommitQualityWebUIAutomation.Pages.PracticePageContainers
 {
     public class RadioButtonsContainer
     {
@@ -14,11 +14,11 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         {
             IReadOnlyCollection<IWebElement> radioButtons = _parentContainer.FindElements(By.XPath("//input[@type='radio']"));
             var targetRadio = radioButtons.FirstOrDefault(rb => rb.GetAttribute("value") == optionName);
-           if (targetRadio != null)
+            if (targetRadio != null)
             {
                 targetRadio.Click();
             }
-           else 
+            else
             {
                 throw new NoSuchElementException($"Radio button with value {optionName} not found");
             }

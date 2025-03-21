@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
-namespace CommitQualityWebUIAutomation.PracticePageContainers
+namespace CommitQualityWebUIAutomation.Pages.PracticePageContainers
 {
     public class GeneralComponentsContainer : PageBase
     {
@@ -40,7 +40,7 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
         public string GetButtonRightClickedMessage() => ButtonRightClickedMessage.Text;
 
         public string GetOptionClickedMessage() => OptionClickedMessage.Text;
-       
+
         public void SelectOptionDropDownCkick() => SelectOptionDropDown.Click();
         public RadioButtonsContainer GetRadioButtonsContainer()
         {
@@ -96,5 +96,5 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
             return Checkboxes.ElementAt(index).Selected;
         }
     }
-}     
+}
 

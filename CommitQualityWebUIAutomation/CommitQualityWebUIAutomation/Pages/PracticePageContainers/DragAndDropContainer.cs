@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 
 
-namespace CommitQualityWebUIAutomation.PracticePageContainers
+namespace CommitQualityWebUIAutomation.Pages.PracticePageContainers
 {
     public class DragAndDropContainer : PageBase
     {

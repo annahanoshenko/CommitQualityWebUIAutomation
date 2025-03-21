@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
 
-namespace CommitQualityWebUIAutomation.PracticePageContainers
+namespace CommitQualityWebUIAutomation.Pages.PracticePageContainers
 {
     public class IFrameContainer : PageBase
     {
@@ -18,7 +18,7 @@ namespace CommitQualityWebUIAutomation.PracticePageContainers
 
         public void SwitchToIFrame()
         {
-            Driver.SwitchTo().Frame(IFrame);
+            SwitchToIFrame(IFrame);
         }
 
         public void ClickPracticeBtnInsideIframe() => PracticeBtnInsideIframe.Click();

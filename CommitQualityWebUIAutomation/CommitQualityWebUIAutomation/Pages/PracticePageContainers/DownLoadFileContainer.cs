@@ -1,7 +1,7 @@
 ﻿using CommitQualityWebUIAutomation.Base;
 using OpenQA.Selenium;
 
-namespace CommitQualityWebUIAutomation.PracticePageContainers
+namespace CommitQualityWebUIAutomation.Pages.PracticePageContainers
 {
     public class DownLoadFileContainer : PageBase
     {

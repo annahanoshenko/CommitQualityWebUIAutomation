@@ -4,11 +4,8 @@ using OpenQA.Selenium.Support.UI;
 
 namespace CommitQualityWebUIAutomation.Pages
 {
-    public class ProductsPage : MenuBar
+    public class ProductsPage(IWebDriver driver) : MenuBar(driver)
     {
-        public ProductsPage(IWebDriver driver) : base(driver)
-        {
-        }
         private IWebElement FilterBtn => Driver.FindElement(By.XPath("//button[@data-testid='filter-button']"));
         private IWebElement ResetBtn => Driver.FindElement(By.XPath("//button[@data-testid='reset-filter-button']"));
         private IWebElement FilterByProductNameTextField => Driver.FindElement(By.XPath("//input[@class='filter-textbox']"));
@@ -23,7 +20,6 @@ namespace CommitQualityWebUIAutomation.Pages
 
         public ProductRow GetProductRow(string productName)
         {
-            var test = ProductRows.Select(p => p.ProductName.Text).ToArray(); 
             ProductRow productRow = ProductRows.Single(p => p.ProductName.Text == productName);
             return productRow;
         }
