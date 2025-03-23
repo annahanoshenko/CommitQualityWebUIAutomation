@@ -16,5 +16,20 @@ namespace CommitQualityWebUIAutomation.Extentions
                 return false;
             }
         }
+
+        public static void ClearWithBackSpaceByValueAttribute(this IWebElement webElement)
+        {
+            int numberOfCharactersToDelete = webElement.GetAttribute("value").Length;
+            for (int i = 0; i < numberOfCharactersToDelete; i++)
+            {
+                webElement.SendKeys(Keys.Backspace);
+            }
+        }
+
+        public static void ClearWithJavaScriptByValueAttribute(this IWebElement webElement, IWebDriver driver)
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            js.ExecuteScript("arguments[0].value = '';", webElement);
+        }
     }
 }

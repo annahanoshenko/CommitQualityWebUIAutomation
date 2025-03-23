@@ -1,5 +1,6 @@
 ﻿using CommitQualityWebUIAutomation.Base;
 using CommitQualityWebUIAutomation.Entities;
+using CommitQualityWebUIAutomation.Extentions;
 using OpenQA.Selenium;
 
 namespace CommitQualityWebUIAutomation.Pages
@@ -44,23 +45,11 @@ namespace CommitQualityWebUIAutomation.Pages
         
         public void ClearAllEditProductPageFields()
         {
-            int numberOfCharactersToDelete = ProductNameTitleField.GetAttribute("value").Length;
-            for (int i = 0; i < numberOfCharactersToDelete; i++)
-            {
-                ProductNameTitleField.SendKeys(Keys.Backspace);
-            }
-
-            numberOfCharactersToDelete = PriceField.GetAttribute("value").Length;
-            for (int i = 0; i < numberOfCharactersToDelete; i++)
-            {
-                PriceField.SendKeys(Keys.Backspace);
-            }
-
+            ProductNameTitleField.ClearWithBackSpaceByValueAttribute();
+            PriceField.ClearWithBackSpaceByValueAttribute();
             ClickUpdateBtn();
 
-            IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
-            js.ExecuteScript("arguments[0].value = '';", DataStockedField);
-
+            DataStockedField.ClearWithJavaScriptByValueAttribute(Driver);
             ClickUpdateBtn();
         }
     }
