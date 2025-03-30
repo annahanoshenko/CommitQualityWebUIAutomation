@@ -1,21 +1,16 @@
 using CommitQualityWebUIAutomation.Base;
 using CommitQualityWebUIAutomation.Entities;
-using CommitQualityWebUIAutomation.Pages;
-using CommitQualityWebUIAutomation.WebElements;
+using CommitQualityWebUIAutomation.Helpers;
 
 namespace CommitQualityWebUIAutomation.AutoTests
 {
     [TestFixture]
-    public class Tests : TestBase
+    public class Tests : CommitQualityTestBase
     {
-
         [Test]
         public void ShouldLoginExistingUser_WhenDataIsValid()
         {
             UserEntity user = new UserEntity("test", "test");
-
-            LoginPage loginPage = new LoginPage(Driver);
-            ProductsPage productsPage = new ProductsPage(Driver);
 
             loginPage.LoginUser(user);
 
@@ -29,9 +24,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         {
             UserEntity user = new UserEntity("", "");
 
-            LoginPage loginPage = new LoginPage(Driver);
-            ProductsPage productsPage = new ProductsPage(Driver);
-
             loginPage.LoginUser(user);
 
             string actualErrorMessage = loginPage.GetLoginErrorMessage();
@@ -44,8 +36,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         public void User_CanLogoutSuccessfully()
         {
             UserEntity user = new UserEntity("test", "test");
-            ProductsPage productsPage = new ProductsPage(Driver);
-            LoginPage loginPage = new LoginPage(Driver);
             
             loginPage.LoginUser(user);
 
@@ -56,12 +46,9 @@ namespace CommitQualityWebUIAutomation.AutoTests
 
         [Test]
         public void ShouldAddProduct_WhenDataIsValid()
-        {
-            MenuBar menuBar = new MenuBar(Driver);
-            ProductRow productRow = new ProductRow(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
-            ProductsPage productsPage = new ProductsPage(Driver);
-            ProductEntity product = new ProductEntity("Test Product", "100", "09/01/2019");
+        { 
+            string productName = StringsHelper.GenerateRandomString(10);
+            ProductEntity product = new ProductEntity(productName, "100", "09/01/2019");
 
             addProductPage.FillingProductFields(product);
 
@@ -72,8 +59,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotAddProduct_WhenProductNameFieldIsEmpty()
         {
-            MenuBar menuBar = new MenuBar(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
             ProductEntity product = new ProductEntity("", "100", "09/01/2019");
 
             addProductPage.FillingProductFields(product);
@@ -94,8 +79,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotAddProduct_WhenProductPriceFieldIsEmpty()
         {
-            MenuBar menuBar = new MenuBar(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
             ProductEntity product = new ProductEntity("Product3", "", "09/01/2019");
 
             addProductPage.FillingProductFields(product);
@@ -116,8 +99,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotAddProduct_WhenProductDateStockedFieldIsInTheFuture()
         {
-            MenuBar menuBar = new MenuBar(Driver);
-            AddProductPage addProductPage = new AddProductPage(Driver);
             ProductEntity product = new ProductEntity("Product3", "100", "09/01/2222");
 
             addProductPage.FillingProductFields(product);
@@ -134,8 +115,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ProductFilterByName_WorksCorrectly()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
-
             string productNameToFilter = "Product 1";
             productsPage.EnterProductName(productNameToFilter);
             
@@ -149,7 +128,6 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void ShouldNotFilterProduct_WhenDataIsInvalid()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.EnterProductName("YYY");
             productsPage.ClickFilterBtn();
             string actualErrorMessage = productsPage.GetFilteringErrorMessage();
@@ -161,68 +139,94 @@ namespace CommitQualityWebUIAutomation.AutoTests
         [Test]
         public void FilteringByProductNameField_ResetCorrectly()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
             productsPage.EnterProductName("Product 1");
             productsPage.ClickFilterBtn();
+
+            bool isProductVisible = productsPage.IsProductisVisible("Product 1");
+            Assert.IsTrue(isProductVisible, "The product filter by name does not work correctly.");
+           
             productsPage.ClickResetBtn();
-            //
+            
+            string productNameFieldText = productsPage.GetProductNameFieldText();
+            Assert.IsEmpty(productNameFieldText, "The product name filter field is not reset.");
+            
+            bool areAllProductsVisible = productsPage.AreAllProductsVisible();
+            Assert.IsTrue(areAllProductsVisible, "Not all products are visible after resetting the filter.");
         }
+
         [Test]
         public void EditingProductInTheProductRow_IsSuccessfully()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
-            ProductRow productRow = productsPage.GetProductRow("Product 1");
-            EditProductPage editProductPage = new EditProductPage(Driver, productRow.ProductRowElement);
-            ProductEntity updatedProduct = new ProductEntity("Product 2", "200", "2021-09-01");
+            UserEntity user = new UserEntity("test", "test");
+            loginPage.LoginUser(user);
 
-            productRow.ClickEditProductBtn();
-            editProductPage.FillingProductFields(updatedProduct);
+            string productName = StringsHelper.GenerateRandomString(8);
+            ProductEntity product = new ProductEntity(productName, "105", "03/02/2022");
+            addProductPage.FillingProductFields(product);
 
-            //WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-            //wait.Until(d => d.FindElement(By.TagName("body")));
+            productsPage.EditProduct(productName);
 
-            ProductRow updatedProductRow = productsPage.GetProductRow("Product 2");
-            Assert.IsNotNull(updatedProductRow, "The edited product did not appear in the list.");
+            string editProductName = StringsHelper.GenerateRandomString(8);
+            ProductEntity editProduct = new ProductEntity(editProductName, "200", "03/02/2021");
+            editProductPage.FillingProductFields(editProduct);
 
-            ProductRow oldProductRow = productsPage.GetProductRow("Product 1");
-            Assert.IsNull(oldProductRow, "The old product still exists on the page after editing.");
+            bool isProductEdited = productsPage.IsProductisVisible(editProductName);
+            Assert.IsTrue(isProductEdited, "The edited product did not appear in the list");
 
-            Assert.AreEqual("Product 2", updatedProductRow.ProductName.Text, "Product name was not changed.");
-
-          
+            bool oldProductExists = productsPage.IsProductisVisible(productName);
+            Assert.IsFalse(oldProductExists, "The old product still exists in the list.");
         }
 
         [Test]
         public void ShouldNotEditProduct_WhenAllRequiredFieldsAreEmpty()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
-            ProductRow productRow = productsPage.GetProductRow("Product 1");
-            EditProductPage editProductPage = new EditProductPage(Driver, productRow.ProductRowElement);
-            ProductEntity product = new ProductEntity("", " ", " ");
+            UserEntity user = new UserEntity("test", "test");
+            loginPage.LoginUser(user);
 
-            productRow.ClickEditProductBtn();
-            editProductPage.FillingProductFields(product);
+            string productName = StringsHelper.GenerateRandomString(8);
+            ProductEntity product = new ProductEntity(productName, "105", "03/02/2022");
+            addProductPage.FillingProductFields(product);
 
-            string actualAlertText = productsPage.GetAlertTextWithWait();
-            string expectedAlertText = "Name must be at least 2 characters.Price must not be empty and within 10 digits. Date must not be empty.Please fill in all fields. Errors must be resolved before submitting";
+            productsPage.EditProduct(productName);
 
-            Assert.That(actualAlertText, Is.EqualTo(expectedAlertText));
+            ProductEntity editProduct = new ProductEntity("", "", "");
+            editProductPage.ClearAllEditProductPageFields();
+
+            string actualEditProductNameErrorMessage = editProductPage.GetEditProductNameErrorMessage();
+            string expectedEditProductNameErrorMessage = "Name must be at least 2 characters.";
+            Assert.That(actualEditProductNameErrorMessage, Is.EqualTo(expectedEditProductNameErrorMessage));
+
+            string actualEditProductPriceErrorMessage = editProductPage.GetEditProductPriceErrorMessage();
+            string expectedEditProductPriceErrorMessage = "Price must not be empty and within 10 digits";
+            Assert.That(actualEditProductPriceErrorMessage, Is.EqualTo(expectedEditProductPriceErrorMessage));
+
+            string actualFiilingFieldsErrorMessage = editProductPage.GetAllFiilingFieldsEditProductErrorMessage();
+            string expectedFiilingFieldsErrorMessage = "Please fill in all fields";
+            Assert.That(actualFiilingFieldsErrorMessage, Is.EqualTo(expectedFiilingFieldsErrorMessage));
+
+            string actualErrorMessage = editProductPage.GetErrorsMustBeResolvedBeforeSubmittingEditProductErrorMessage();
+            string expectedErrorMessage = "Errors must be resolved before submitting";
+            Assert.That(actualErrorMessage, Is.EqualTo(expectedErrorMessage));
         }
 
         [Test]
         public void DeletingProduct_ShouldNotBeVisibleAfterPageRefresh()
         {
-            ProductsPage productsPage = new ProductsPage(Driver);
-            ProductRow productRow = productsPage.GetProductRow("Product 1");
+            UserEntity user = new UserEntity("test", "test");
 
-            productRow.ClickDeleteProductBtn();
+            loginPage.LoginUser(user);
+
+            string productName = StringsHelper.GenerateRandomString(8);
+            ProductEntity product = new ProductEntity(productName, "104", "11/01/2019");
+
+            addProductPage.FillingProductFields(product);
+
+            productsPage.DeleteProduct(productName);
+
             Driver.Navigate().Refresh();
 
-            //WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-            //wait.Until(d => d.FindElement(By.TagName("body")));
-
-            var deleteProduct = productsPage.GetProductRow("Product 1");
-            Assert.IsNull(deleteProduct, "The product still exists on the page after deleting and refreshing the page.");
+            bool productExists = productsPage.IsProductisVisible(productName);
+            Assert.IsFalse(productExists, "The product still exists on the page after deleting and refreshing the page.");
         }
     }
 
